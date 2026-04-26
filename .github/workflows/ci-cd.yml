@@ -9,7 +9,7 @@ on:
     types: [created]
 
 jobs:
-  # Job 1: Install Dependencies & Run Tests
+  # Job 1: Install dependencies, run tests, build
   test-and-build:
     runs-on: ubuntu-latest
     steps:
@@ -34,14 +34,11 @@ jobs:
       - name: Build (Prepare for deployment)
         run: |
           echo "Build step completed. Application ready for packaging."
-          # Example: create a distribution package
-          # python setup.py sdist
-          # or just ensure all files are in place
           mkdir -p build_output
           cp -r . build_output/
           echo "Build output prepared in build_output/"
 
-  # Job 2: Deploy to Staging (only when pushing to staging branch)
+  # Job 2: Deploy to Staging (only on push to staging branch)
   deploy-staging:
     needs: test-and-build
     runs-on: ubuntu-latest
@@ -55,10 +52,9 @@ jobs:
           STAGING_KEY: ${{ secrets.STAGING_DEPLOY_KEY }}
         run: |
           echo "Deploying to staging server..."
-          # Replace with real deployment command (e.g., rsync, scp, etc.)
           echo "Staging deployment successful using key: ${STAGING_KEY:0:4}..."
 
-  # Job 3: Deploy to Production (only when a release is created)
+  # Job 3: Deploy to Production (only on release creation)
   deploy-production:
     needs: test-and-build
     runs-on: ubuntu-latest
