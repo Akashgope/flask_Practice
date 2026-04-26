@@ -105,3 +105,41 @@ The required secrets configured in the repository.
 
 
 
+## GitHub Actions CI/CD Workflow
+
+This repository uses a GitHub Actions workflow (`.github/workflows/ci-cd.yml`) to automatically test, build, and deploy the Flask application.
+
+### Workflow Triggers & Jobs
+
+| Trigger                | Jobs executed                                    |
+|------------------------|--------------------------------------------------|
+| Push to `main`         | Install Dependencies → Run Tests → Build         |
+| Push to `staging`      | Install Dependencies → Run Tests → Build → Deploy to Staging |
+| Release (tag) created  | Install Dependencies → Run Tests → Build → Deploy to Production |
+
+### Required Secrets
+
+To enable deployment jobs, you must add the following secrets in **Settings → Secrets and variables → Actions**:
+
+- `STAGING_DEPLOY_KEY` – used for staging environment deployment.
+- `PROD_API_TOKEN` – used for production environment deployment.
+
+*(For this assignment, dummy values are sufficient because deployment is simulated.)*
+
+### How to Use
+
+1. Fork this repository.
+2. Add the required secrets (any dummy text).
+3. Push changes to `staging` to see staging deployment.
+4. Create a release to trigger production deployment.
+
+### Screenshots
+
+<img width="1568" height="903" alt="Screenshot 2026-04-26 at 8 47 02 PM" src="https://github.com/user-attachments/assets/cd2b7279-b524-4692-a9f4-85909cccec7b" />
+
+<img width="1568" height="654" alt="Screenshot 2026-04-26 at 8 47 34 PM" src="https://github.com/user-attachments/assets/11c581e2-94c2-4746-8826-48efe3b7250a" />
+
+
+
+
+
